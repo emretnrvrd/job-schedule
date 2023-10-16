@@ -17,7 +17,18 @@ class IndexController extends Controller
         $jobs = Job::all();
 
         $schedule = new Scheduler($jobs, $developers);
-        return view("home", ["schedule" => $schedule->get()]);
+
+
+        $weeklyWorkForce = $developers->reduce(fn($total, $dev) => $total + $dev->workforce_per_week, 0);
+        $totalRequiredEffort = $jobs->reduce(fn($total, $job) => $total + $job->required_effort, 0);
+
+        $weekDuration = number_format($totalRequiredEffort/$weeklyWorkForce, 2);
+        $dayDuration = number_format($totalRequiredEffort/$weeklyWorkForce * 5, 2);
+        return view("home", [
+            "week_duration" => $weekDuration,
+            "day_duration" => $dayDuration,
+            "schedule" => $schedule->get(),
+        ]);
 
     }
 }

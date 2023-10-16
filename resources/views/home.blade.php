@@ -3,6 +3,16 @@
 
 @section("content")
 
+<div class="mb-5" style="max-width: 500px; margin: 0 auto;">
+    <h5>
+        {{ $week_duration }} Week
+   </h5>
+   <h5>
+        {{ $day_duration }} Days
+   </h5>
+</div>
+
+
 
 @foreach ($schedule as $index => $devDailySchedules)
 <div class="mb-5" style="max-width: 500px; margin: 0 auto;">
